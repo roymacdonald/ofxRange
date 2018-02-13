@@ -71,15 +71,15 @@ class ofRange_ {
         return (min != rg.min) || (max != rg.max);
     }
 	
-	bool contains(T p){
+	bool contains(T p) const{
 		return p >= min && p <= max;
 	}
 	
-	bool contains(const ofRange_<T>& rg){
+	bool contains(const ofRange_<T>& rg) const{
 		return rg.min >= min && rg.max <= max;
 	}
 	
-	bool intersects(const ofRange_<T>& rg){
+	bool intersects(const ofRange_<T>& rg) const{
         bool intersects = this->contains(rg) || (min >= rg.min && max < rg.max) || contains(rg.min) || contains(rg.max);
 		return intersects;
 	}
@@ -89,11 +89,11 @@ class ofRange_ {
 		return contains(rg.min) || contains(rg.max);
 	}
 	
-	T span(){
+	T span() const{
 		return max - min;
 	}
 	
-	T center(){
+	T center() const{
 		return span()/2.0 + min;
 	}
 	
