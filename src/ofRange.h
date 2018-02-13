@@ -94,7 +94,7 @@ class ofRange_ {
 	}
 	
 	T center() const{
-		return span()/2.0 + min;
+		return span()/2 + min;
 	}
 	
 	ofRange_<T> getClamped(const ofRange_<T>& rg) const {
