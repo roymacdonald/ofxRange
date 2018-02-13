@@ -9,6 +9,7 @@
 // ofRange_<T>
 //----------------------------------------------------------
 #pragma once
+#include <algorithm>
 
 template<typename T>
 class ofRange_ {
@@ -48,11 +49,11 @@ class ofRange_ {
 	}
 	
 	void setMin(T _min){
-		min = MIN(_min, max);
+		min = std::min(_min, max);
 	}
 	
 	void setMax(T _max){
-		max = MAX(min, _max);
+		max = std::max(min, _max);
 	}
     
     void growToInclude(T _value) {
@@ -99,36 +100,36 @@ class ofRange_ {
 	
 	ofRange_<T> getClamped(const ofRange_<T>& rg) const {
 		ofRange_<T> crg;
-		crg.min = MAX(rg.min,min);
-		crg.max = MIN(rg.max,max);		
+		crg.min = std::max(rg.min,min);
+		crg.max = std::min(rg.max,max);		
 		return crg;
 	}
 	
     ofRange_<T>& clamp(const ofRange_<T>& rg){
-		min = MAX(rg.min,min);
-		max = MIN(rg.max,max);
+		min = std::max(rg.min,min);
+		max = std::min(rg.max,max);
 		return *this;
 	}
 
 	//union
 	ofRange_<T>  operator +( const ofRange_<T>& rg ) const {
-        return ofRange_<T>(MIN(min, rg.min), MAX(max, rg.max));
+        return ofRange_<T>(std::min(min, rg.min), std::max(max, rg.max));
     }
 	ofRange_<T>& operator+=( const ofRange_<T>& rg ) {
-        min = MIN(min, rg.min);
-        max = MAX(max, rg.max);
+        min = std::min(min, rg.min);
+        max = std::max(max, rg.max);
         return *this;
     }
 	//intersection
 	inline ofRange_<T>  operator -(const ofRange_<T>& rg) const {
         //	if(!ofRange_<T>::intersects(rg)) return ofRange_<T>(0,0);
-        return ofRange_<T>(MAX(min, rg.min), MIN(max, rg.max));
+        return ofRange_<T>(std::max(min, rg.min), std::min(max, rg.max));
     }
 
 	inline ofRange_<T>& operator-=(const ofRange_<T>& rg) {
         //	if(!ofRange_<T>::intersects(rg)) return ofRange_<T>(0,0);
-        min = MAX(min, rg.min);
-        max = MIN(max, rg.max);
+        min = std::max(min, rg.min);
+        max = std::min(max, rg.max);
         return *this;
     }
 
@@ -159,12 +160,12 @@ class ofRange_ {
 	
     
 	
-    inline friend ostream& operator<<(ostream& os, const ofRange_<T>& rg) {
+    inline friend std::ostream& operator<<(std::ostream& os, const ofRange_<T>& rg) {
         os << "[" << rg.min << " - " << rg.max << "]";
         return os;
     }
     
-    inline friend istream& operator>>(istream& is, ofRange_<T>& rg) {
+    inline friend std::istream& operator>>(std::istream& is, ofRange_<T>& rg) {
         is.ignore(1);
         is >> rg.min;
         is.ignore(3);
