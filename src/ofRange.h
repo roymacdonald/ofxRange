@@ -10,6 +10,7 @@
 //----------------------------------------------------------
 #pragma once
 #include <algorithm>
+#include <iostream> 
 
 template<typename T>
 class ofRange_ {
