@@ -11,7 +11,7 @@
 #pragma once
 #include <algorithm>
 #include <iostream> 
-
+#include "ofMath.h"
 template<typename T>
 class ofRange_ {
   public:
@@ -66,11 +66,12 @@ class ofRange_ {
     // 
     
     bool operator==( const ofRange_<T>& rg ) {
-        return (min == rg.min) && (max == rg.max);
+        return ofIsFloatEqual(min,rg.min) && ofIsFloatEqual(max, rg.max);
     }
 	
     bool operator!=( const ofRange_<T>& rg ) {
-        return (min != rg.min) || (max != rg.max);
+		return !ofIsFloatEqual(min,rg.min) || !ofIsFloatEqual(max, rg.max);
+//        return (min != rg.min) || (max != rg.max);
     }
 	
 	bool contains(T p) const{
