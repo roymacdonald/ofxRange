@@ -63,16 +63,39 @@ class ofRange_ {
     }
     
     // map
-    // 
-    
-    bool operator==( const ofRange_<T>& rg ) {
-        return ofIsFloatEqual(min,rg.min) && ofIsFloatEqual(max, rg.max);
+    //
+	
+//    typename std::enable_if<std::is_floating_point<T>::value, bool>::type
+	bool operator==( const ofRange_<T>& rg )
+	{
+		if(std::is_floating_point<T>::value){
+			return ofIsFloatEqual(min,rg.min) && ofIsFloatEqual(max, rg.max);
+		}else{
+			return (min == rg.min) && (max == rg.max);
+		}
     }
 	
-    bool operator!=( const ofRange_<T>& rg ) {
-		return !ofIsFloatEqual(min,rg.min) || !ofIsFloatEqual(max, rg.max);
-//        return (min != rg.min) || (max != rg.max);
+//	typename std::enable_if<std::is_floating_point<T>::value, bool>::type
+	bool operator!=( const ofRange_<T>& rg )
+	{
+//		if(std::is_floating_point<T>::value){
+//			return ! ofIsFloatEqual(min,rg.min) || !ofIsFloatEqual(max, rg.max);
+//		}else{
+			 return (min != rg.min) || (max != rg.max);
+//		}
     }
+	
+//	typename std::enable_if<std::is_integral<T>::value, bool>::type
+//	operator!=( const ofRange_<T>& rg )
+//	{
+//		return (min != rg.min) || (max != rg.max);
+//	}
+//
+//	typename std::enable_if<std::is_integral<T>::value, bool>::type
+//	operator ==( const ofRange_<T>& rg )
+//	{
+//		return (min == rg.min) && (max == rg.max);
+//	}
 	
 	bool contains(T p) const{
 		return p >= min && p <= max;
@@ -208,9 +231,23 @@ inline ofRange_<T> operator-( T f, const ofRange_<T>& rg ){
 	return ofRange_<T>(f - rg.min, f - rg.max);
 };
 
+
+
+
+
 typedef ofRange_<char>   ofCharRange;
 typedef ofRange_<float>  ofFloatRange;
 typedef ofFloatRange     ofRange;
 typedef ofRange_<double> ofDoubleRange;
 typedef ofRange_<int>    ofIntRange;
 typedef ofRange_<long>   ofLongRange;
+
+typedef ofRange_<int8_t> ofRange8;
+typedef ofRange_<int16_t> ofRange16;
+typedef ofRange_<int32_t> ofRange32;
+typedef ofRange_<int64_t> ofRange64;
+
+typedef ofRange_<uint8_t> ofRange8u;
+typedef ofRange_<uint16_t> ofRange16u;
+typedef ofRange_<uint32_t> ofRange32u;
+typedef ofRange_<uint64_t> ofRange64u;
